@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Website</title>
+</head>
+<body>
+<form action="/users/create" method="post">
+    <label>Name</label>
+    <input name="username"/><br><br>
+    <label>Age</label>
+    <input type="number"  name="age" min="10" max="120"/><br><br>
+    <input type="submit" value="Send">
+</form>
+<h1>List of Users</h1>
+{{#each users}}
+    <div style="border: 1px solid green; padding: 15px">
+        <h3>Username - {{this.username}}</h3>
+        <p>Возраст - {{this.age}}</p>
+        <button onclick="removeById({{this.id}})">
+            Delete
+        </button>
+    </div>
+{{/each}}
+<script>
+    function removeById(id) {
+        fetch(`http://localhost:5000/users/remove?id=${id}`,{
+            method:'DELETE'
+        }).then(()=>window.location.reload())
+    }
+</script>
+</body>
+</html>
